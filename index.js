@@ -1,5 +1,5 @@
 const express = require("express");
-const { RootRouter } = require("./routes/root-route");
+const { rootRouter } = require("./routes/root-route");
 require("dotenv").config();
 
 const { urlencoded, json } = express;
@@ -10,7 +10,7 @@ server.use([urlencoded({ extended: true }), json()]);
 const apiVersion = "v1.0.0";
 
 server.use(`/api/${apiVersion}`, [
-  RootRouter,
+  rootRouter,
 ]);
 
 const normalizePort = () => {

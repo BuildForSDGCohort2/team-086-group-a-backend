@@ -1,10 +1,10 @@
 const express = require("express");
 const { apiNavigation } = require("../controllers/root-controller")();
 
-const RootRouter = express.Router();
+const rootRouter = express.Router();
 
-RootRouter
+rootRouter
   .route("/")
   .get(apiNavigation);
 
-module.exports = { RootRouter };
+module.exports = { rootRouter };
