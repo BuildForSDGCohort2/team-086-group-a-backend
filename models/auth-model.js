@@ -1,4 +1,4 @@
-const { mongoose } = require('../configs/mongodb-config');
+const { mongoose } = require("../configs/mongodb-config");
 
 const AuthSchema = new mongoose.Schema({
   email: {
@@ -6,6 +6,6 @@ const AuthSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
 }, { timestamps: true });
-const AuthModel = mongoose.model('Auths', AuthSchema);
+const AuthModel = mongoose.model("Auths", AuthSchema);
 
 module.exports = AuthModel;

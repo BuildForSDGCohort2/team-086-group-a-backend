@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 let dbConnectionString;
 
 switch (process.env.NODE_ENV) {
-  case 'development':
+  case "development":
     dbConnectionString = process.env.MONGO_DEV_DATABASE_URL;
     break;
 
-  case 'test':
+  case "test":
     dbConnectionString = process.env.MONGO_TEST_DATABASE_URL;
     break;
 
@@ -24,6 +24,6 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
 );
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on("error", console.error.bind(console, "connection error:"));
 
 module.exports = { mongoose };

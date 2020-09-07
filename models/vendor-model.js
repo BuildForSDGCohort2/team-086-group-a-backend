@@ -1,17 +1,17 @@
-const { mongoose } = require('../configs/mongodb-config');
+const { mongoose } = require("../configs/mongodb-config");
 
 const VendorSchema = new mongoose.Schema({
   businessName: {
     type: String,
     required: true,
-    trim: ' ',
+    trim: " ",
     minlength: 2,
     maxlength: 100,
   },
   email: {
     type: String,
     required: true,
-    trim: ' ',
+    trim: " ",
     lowercase: true,
     unique: true,
     minlength: 10,
@@ -20,7 +20,7 @@ const VendorSchema = new mongoose.Schema({
   phone: {
     type: String,
     required: true,
-    trim: ' ',
+    trim: " ",
     minlength: 5,
     maxlength: 100,
   },
@@ -31,6 +31,6 @@ const VendorSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const VendorModel = mongoose.model('Vendors', VendorSchema);
+const VendorModel = mongoose.model("Vendors", VendorSchema);
 
 module.exports = VendorModel;

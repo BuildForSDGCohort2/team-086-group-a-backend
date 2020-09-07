@@ -2,11 +2,11 @@ const rootController = () => {
   const apiNavigation = (req, res) => {
     const data = [
       {
-        url: '/api/v1.0.0',
+        url: "/api/v1.0.0",
         methods: [
           {
             GET: {
-              desc: 'API documentation',
+              desc: "API documentation",
             },
           },
         ],
