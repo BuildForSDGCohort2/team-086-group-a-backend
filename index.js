@@ -1,25 +1,34 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const { rootRouter } = require("./routes/root-route");
 require("dotenv").config();
 
-const Options = {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
+const { urlencoded, json } = express;
+
+const server = express();
+server.use([urlencoded({ extended: true }), json()]);
+
+const apiVersion = "v1.0.0";
+
+server.use(`/api/${apiVersion}`, [rootRouter]);
+
+const normalizePort = () => {
+  const port = parseInt(process.env.PORT, 10);
+  if (process.env.PORT && Number.isNaN(port)) {
+    return process.env.PORT;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return 3000;
 };
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const port = normalizePort();
+const hostname = process.env.HOSTNAME || "localhost";
 
-mongoose
-  .connect(MONGODB_URI, Options)
-  .then(console.log("connected succesfully"))
-  .catch((err) => console.error(err));
+const dev = { team_086_group_a: "buildforsdg project" };
 
-app.listen(PORT, () => {
-  console.log(`server ready on ${PORT}`);
-});
+server.listen(port, () =>
+  console.log(
+    `dev ${dev.team_086_group_a} server ${apiVersion} listening on ${hostname}:${port}`
+  )
+);
