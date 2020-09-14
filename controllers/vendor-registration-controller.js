@@ -51,8 +51,8 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
             // create user access token
             const userPayload = {
               authId: authResult._id,
+              email: authResult.email,
               vendorId: vendorResult._id,
-              email: result.email,
             };
 
             const accessTokenOptions = {
