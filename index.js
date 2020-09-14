@@ -1,5 +1,5 @@
 const express = require("express");
-const { rootRouter } = require("./routes/root-route");
+const { VendorRouter } = require("./routes/vendor-registration-router");
 require("dotenv").config();
 
 const { urlencoded, json } = express;
@@ -7,9 +7,11 @@ const { urlencoded, json } = express;
 const server = express();
 server.use([urlencoded({ extended: true }), json()]);
 
-const apiVersion = "v1.0.0";
+const apiVersion = process.env.VERSION || "v1.0.0";
 
-server.use(`/api/${apiVersion}`, [rootRouter]);
+server.use(`/api/${apiVersion}`, [
+  VendorRouter,
+]);
 
 const normalizePort = () => {
   const port = parseInt(process.env.PORT, 10);
