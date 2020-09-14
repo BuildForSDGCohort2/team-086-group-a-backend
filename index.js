@@ -1,16 +1,17 @@
 const express = require("express");
 const { rootRouter } = require("./routes/root-route");
+const UserSignup = require("./routes/User");
 require("dotenv").config();
 
-const { urlencoded, json } = express;
-
 const server = express();
+const { urlencoded, json } = express;
 server.use([urlencoded({ extended: true }), json()]);
 
 const apiVersion = "v1.0.0";
 
 server.use(`/api/${apiVersion}`, [rootRouter]);
-
+server.use(UserSignup);
+server.use(cors());
 const normalizePort = () => {
   const port = parseInt(process.env.PORT, 10);
   if (process.env.PORT && Number.isNaN(port)) {
