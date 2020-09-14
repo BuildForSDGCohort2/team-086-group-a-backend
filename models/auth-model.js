@@ -8,7 +8,7 @@ const AuthSchema = new mongoose.Schema({
     type: String, required: true
   },
   role: {
-    type: String, required: true, enum: ['admin', 'vendor', 'customer']
+    type: String, required: true, enum: ["admin", "vendor", "customer"]
   },
 }, { timestamps: true });
 const AuthModel = mongoose.model("Auths", AuthSchema);

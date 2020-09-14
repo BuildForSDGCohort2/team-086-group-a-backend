@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-const { hash, genSaltSync } = require('bcryptjs');
-const { validationResult } = require('express-validator');
-const { sign } = require('jsonwebtoken');
+const { hash, genSaltSync } = require("bcryptjs");
+const { validationResult } = require("express-validator");
+const { sign } = require("jsonwebtoken");
 
 const vendorController = (errResponse, AuthModel, VendorModel) => {
   const registerVendor = (req, res) => {
@@ -20,7 +20,7 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
       .then(async (hashString) => {
         // overwrite password with its hash version
         reqBody.password = hashString;
-        reqBody.role = 'vendor';
+        reqBody.role = "vendor";
 
         // save auth data to database
         const newAuth = new AuthModel(reqBody);
@@ -28,7 +28,7 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
           if (authErr) {
             switch (authErr.code) {
               case 11000:
-                return errResponse(res, 403, 'User already exists');
+                return errResponse(res, 403, "User already exists");
 
               default:
                 return errResponse(res, 500, authErr.message);
@@ -41,7 +41,7 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
             if (vendorErr) {
               switch (vendorErr.code) {
                 case 11000:
-                  return errResponse(res, 403, 'User already exists');
+                  return errResponse(res, 403, "User already exists");
 
                 default:
                   return errResponse(res, 500, vendorErr.message);
@@ -56,10 +56,10 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
             };
 
             const accessTokenOptions = {
-              algorithm: 'HS256',
+              algorithm: "HS256",
               audience: authResult.role,
               expiresIn: 600,
-              issuer: 'ThinkSpiceFoods',
+              issuer: "ThinkSpiceFoods",
             };
             const accessToken = sign(
               userPayload,
@@ -81,20 +81,20 @@ const vendorController = (errResponse, AuthModel, VendorModel) => {
             const cookieOptions = {
               maxAge: 30 * 24 * 3600000,
               secure: false,
-              sameSite: 'none',
+              sameSite: "none",
               httpOnly: true,
               path: `/api/${apiVersion}/refresh-user-session`,
-              domain: req.hostname !== 'localhost' ? `.${req.hostname}` : 'localhost',
+              domain: req.hostname !== "localhost" ? `.${req.hostname}` : "localhost",
             };
 
             return res
               .status(201)
-              .header('Authorization', accessToken)
-              .cookie('ThinkSpiceFoodsRefresh', refreshToken, cookieOptions)
+              .header("Authorization", accessToken)
+              .cookie("ThinkSpiceFoodsRefresh", refreshToken, cookieOptions)
               .json({
                 authId: authResult._id,
                 vendorId: vendorResult._id,
-                message: 'Account Created Successfully',
+                message: "Account Created Successfully",
               });
           });
         });

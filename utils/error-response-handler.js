@@ -11,28 +11,28 @@ module.exports = (res, status = 500, message) => {
   if (message == null) {
     switch (status) {
       case 400:
-        errMessage = 'User request error';
+        errMessage = "User request error";
         break;
       case 401:
-        errMessage = 'User not recognized';
+        errMessage = "User not recognized";
         break;
       case 403:
-        errMessage = 'Access denied';
+        errMessage = "Access denied";
         break;
       case 404:
-        errMessage = 'Resource not found';
+        errMessage = "Resource not found";
         break;
       case 406:
-        errMessage = 'Non-conforming data cannot be processed';
+        errMessage = "Non-conforming data cannot be processed";
         break;
       case 422:
-        errMessage = 'Invalid request parameters';
+        errMessage = "Invalid request parameters";
         break;
       case 501:
-        errMessage = 'Service not implemented';
+        errMessage = "Service not implemented";
         break;
       default:
-        errMessage = 'Internal server error';
+        errMessage = "Internal server error";
         break;
     }
   } else {
