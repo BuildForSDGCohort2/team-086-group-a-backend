@@ -1,5 +1,6 @@
 const express = require("express");
 const { VendorRouter } = require("./routes/vendor-registration-router");
+const { AdminRouter } = require("./routes/admin-registration-router");
 require("dotenv").config();
 
 const { urlencoded, json } = express;
@@ -11,6 +12,7 @@ const apiVersion = process.env.VERSION || "v1.0.0";
 
 server.use(`/api/${apiVersion}`, [
   VendorRouter,
+  AdminRouter,
 ]);
 
 const normalizePort = () => {
