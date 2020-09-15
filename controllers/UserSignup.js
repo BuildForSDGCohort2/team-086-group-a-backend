@@ -1,13 +1,15 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const Schema = mongoose.Schema;
 const nodemailer = require("nodemailer");
 const UserSignUp = require("../models/SignUpAuth");
 
 exports.post_user_signUp = (res, req) => {
+  //destructuring of the user info
   const { fullName, phoneNumber, email, password } = req.body;
-  const saltR = 15;
+
+  //setting salt
+  const saltR = 10;
+
+  //hashing the user password
   bcrypt.genSalt(saltR, (err, salt) => {
     if (err) {
       throw err;
@@ -16,14 +18,15 @@ exports.post_user_signUp = (res, req) => {
         if (err) {
           console.error(err);
         } else {
-          const regMember = new SignUpUser({
-            //creating an instance of User data
+          //creating an instance of User data
+          const regMember = new UserSignUp({
             fullName,
             phoneNumber,
             email,
             password: hash,
           });
 
+          //sending data to the database
           regMember
             .save()
             .then(() => {
@@ -35,8 +38,10 @@ exports.post_user_signUp = (res, req) => {
               res.status(500).send({
                 error: err,
               });
-            }); //saving the new member to mongodb
+            });
           console.log(regMember);
+
+          //getting the user info
           sendEmail(email, password, fullName);
         }
       });
@@ -44,22 +49,28 @@ exports.post_user_signUp = (res, req) => {
   });
 };
 
+//sending email to the user
 const sendEmail = (signupMemberEmail, pass, fullName) => {
   const { EMAIL, PASSWORD } = process.env;
-  let transporter = nodeMailer.createTransport({
+
+  //defining the message porter
+  let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: `${PASSWORD}`,
-      pass: `${EMAIL}`,
+      adminPassword: `${PASSWORD}`,
+      adminEmail: `${EMAIL}`,
     },
   });
 
+  // message option
   let mailOptions = {
     from: `${EMAIL}`,
     to: signupMemberEmail,
     subject: "library app",
     html: `<h1>Hello ${fullName.toUpperCase()} </h1> <p>this mail is from ThinkSpiceFood,</p> <p>Thank you for signing up with us.</p> <p>This are your secret credentials below.</p> <p>Email: ${signupMemberEmail}\n password: ${pass}</p>`,
   };
+
+  //transporting the mail to the user
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       throw err;
