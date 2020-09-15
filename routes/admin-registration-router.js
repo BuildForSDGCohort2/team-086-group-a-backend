@@ -8,7 +8,7 @@ const { createAdmin } = require("../controllers/admin-registration-controller")(
 const AdminRouter = express.Router();
 
 AdminRouter
-  .route("/dashboard/admin/login")
+  .route("/dashboard/admin/register")
   .post(adminAuth, adminRegistrationValidator, createAdmin);
 
 module.exports = { AdminRouter };
