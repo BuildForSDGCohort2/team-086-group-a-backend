@@ -1,7 +1,7 @@
 const { mongoose } = require("../configs/mongodb-config");
 
 const VendorSchema = new mongoose.Schema({
-  businessName: {
+  name: {
     type: String,
     required: true,
     trim: " ",
