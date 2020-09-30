@@ -16,8 +16,8 @@ exports.postUserSignUp = async (req, res) => {
   const saltR = 10;
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
-      res.status(500).send({
-        message: "error occcured while hashing",
+      res.status(400).send({
+        message: "unathorized  error",
         status: "error",
       });
     } else {
@@ -45,6 +45,7 @@ exports.postUserSignUp = async (req, res) => {
               userId: member._id,
               status: "success",
             });
+
             // SendEmail.SendEmail(email, password, fullName);
           } catch (error) {
             res.status(400).send({

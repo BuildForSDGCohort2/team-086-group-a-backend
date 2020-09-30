@@ -8,14 +8,14 @@ const options = Object.freeze({
 });
 
 const vendorMenu = {
-  name: { type: String, maxlength: 10, required: true },
-  type: { type: String, maxlength: 10, required: true },
-  image: { type: String, maxlength: 10, required: true },
-  desc: { type: String, maxlength: 100, required: true },
-  price: { type: Number, required: true },
-  vendorId: { type: String, required: true },
+  name: { type: String, maxlength: 10 },
+  type: { type: String, maxlength: 10 },
+  image: { type: String, maxlength: 10 },
+  desc: { type: String, maxlength: 100 },
+  price: { type: Number },
+  vendorId: { type: String },
   discount: { type: String },
-  readyMeal: { type: Boolean, default: false, required: true },
+  readyMeal: { type: Boolean, default: false },
   offers: { type: Boolean, default: false },
 };
 
@@ -27,16 +27,16 @@ const businessType = {
 };
 
 const orders = {
-  name: { type: String, maxlength: 10, required: true },
-  type: { type: String, maxlength: 10, required: true },
-  image: { type: String, maxlength: 10, required: true },
-  desc: { type: String, maxlength: 100, required: true },
-  price: { type: Number, required: true },
+  name: { type: String, maxlength: 10 },
+  type: { type: String, maxlength: 10 },
+  image: { type: String, maxlength: 10 },
+  desc: { type: String, maxlength: 100 },
+  price: { type: Number },
   offers: { type: Boolean, default: false },
   discount: { type: String },
   userId: { type: String },
 };
-
+``;
 const vendorCategory = [];
 
 const VendorsSignup = new Schema(
@@ -45,7 +45,7 @@ const VendorsSignup = new Schema(
     businessName: { type: String, min: 6, maxlength: 50, required: true },
     location: { type: String, required: true },
     email: { type: String, required: true, maxlength: 30, unique: true },
-    password: { type: String, min: 8, maxlength: 30, required: true },
+    password: { type: String, min: 8, maxlength: 300, required: true },
     number: { type: Number, required: true, min: 9 },
     businessType: businessType,
     vendorMenu: vendorMenu,
