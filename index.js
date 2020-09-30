@@ -1,13 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const cors = require("cors");
-const dotenv = require("dotenv");
-const vendorSignUp = require("./controller/vendor_registration/vendorSignup");
 
 const options = {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
+  useUnifiedTopology: true,
 };
 
 const PORT = process.env.PORT || 3000;
