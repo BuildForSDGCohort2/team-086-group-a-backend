@@ -1,8 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
-const cors = require("cors");
 
+const dotenv = require("dotenv").config();
+const cors = require("cors");
+const SignupUser = require("./routes/UserRegisteration/User");
+const LoginUser = require("./routes/UserRegisteration/userLogin");
+const auth = require("./controllers/UserRegistration/verifyToken");
 const options = {
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -10,23 +13,30 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.Port || 3000;
 const MONGODB_URI = "mongodb://localhost:07017(express.server)";
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/thinkspicefood", SignupUser);
+app.use("/api/thinkspicefood", LoginUser);
 
+app.get("/userslist", auth, (req, res) => {
+  res.send({
+    message: "hellow am verifid",
+  });
+});
 mongoose
   .connect(MONGODB_URI, options)
   .then(() => {
-    console.warn("connected successfully");
+    console.warn("conneted successfully");
   })
   .catch((err) => {
-    throw `error occurred in ${error}`;
+    throw "error occured : " + err;
   });
 
-app.listen(PORT, () =>
-  console.warn(`server ready on http://localhost:${PORT}`)
-);
+//start the server
+app.listen(PORT, () => {
+  console.warn(`server ready on http://localhost:${PORT}`);
+});
