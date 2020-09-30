@@ -14,7 +14,7 @@ const vendorMenu = {
   price: { type: Number, required: true },
   vendorId: { type: String, required: true },
   discount: { type: String },
-  readyMeal: { type: Boolean, default: false },
+  readyMeal: { type: Boolean, default: false, required: true },
   offers: { type: Boolean, default: false },
 };
 
@@ -22,7 +22,7 @@ const businessType = {
   type: String,
   enum: ["personal", "organization"],
   default: "personal",
-  //   required: true,
+  required: true,
 };
 
 const orders = {
