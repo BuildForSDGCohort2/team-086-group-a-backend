@@ -1,11 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const cors = require("cors");
 const SignupUser = require("./routes/UserRegisteration/User");
 const LoginUser = require("./routes/UserRegisteration/userLogin");
-const auth = require("./controllers/UserRegistration/verifyToken");
+const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const options = {
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -21,10 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/thinkspicefood", SignupUser);
 app.use("/api/thinkspicefood", LoginUser);
-
-app.get("/userslist", auth, (req, res) => {
+app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
-    message: "hellow am verifid",
+    message: "hello am verified",
   });
 });
 mongoose

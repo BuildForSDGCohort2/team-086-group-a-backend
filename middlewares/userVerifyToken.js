@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
+module.exports.userVerifyToken = (req, res, next) => {
   //get the token secret from the .env file
   const { TOKEN_SECRET } = process.env;
   const token = req.header("user-register-token");

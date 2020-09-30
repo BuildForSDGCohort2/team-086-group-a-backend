@@ -10,6 +10,7 @@ module.exports.postUserLogin = async (req, res) => {
 
   //checking if email exist in the database
   const user = await UserSignUp.findOne({ email: email });
+
   if (!user) {
     return res.status(400).send({ message: "email or password incorrect" });
   }
@@ -18,7 +19,7 @@ module.exports.postUserLogin = async (req, res) => {
   const isValidUser = await bcrypt.compare(password, user.password);
   if (!isValidUser) {
     return res.status(400).send({
-      message: "email or password incorrect",
+      message: "password incorrect",
     });
   }
 
