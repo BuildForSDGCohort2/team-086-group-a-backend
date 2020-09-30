@@ -29,8 +29,14 @@ app.get("/userslist", auth, (req, res) => {
 });
 mongoose
   .connect(MONGODB_URI, options)
-  .then(() => console.log("conneted successfully"))
-  .catch((err) => console.log("error occured : " + err));
+  .then(() => {
+    console.warn("conneted successfully");
+  })
+  .catch((err) => {
+    throw "error occured : " + err;
+  });
 
 //start the server
-app.listen(PORT, () => console.log(`server ready on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.warn(`server ready on http://localhost:${PORT}`);
+});

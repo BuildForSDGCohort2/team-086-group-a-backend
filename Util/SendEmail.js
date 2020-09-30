@@ -19,7 +19,7 @@ exports.SendEmail = (signupMemberEmail, pass, fullName) => {
     from: `${EMAIL}`,
     to: signupMemberEmail,
     subject: "library app",
-    html: `<h1>Hello ${fullName.toUpperCase()} </h1> <p>this mail is from ThinkSpiceFood,</p> <p>Thank you for signing up with us.</p> <p>This are your secret credentials below.</p> <p>Email: ${signupMemberEmail}\n password: ${pass}</p>`,
+    html: `<h1>Hello ${fullName.toUpperCase()} </h1> <p>This mail is from ThinkSpiceFood,</p> <p>Thank you for signing up with us.</p> <p>This are your secret credentials below.</p> <p>Email: ${signupMemberEmail}\n password: ${pass}</p>`,
   };
 
   //transporting the mail to the user
@@ -27,7 +27,7 @@ exports.SendEmail = (signupMemberEmail, pass, fullName) => {
     if (err) {
       throw err;
     } else {
-      console.log(`email successfully sent! ${info.response}`);
+      throw `email successfully sent! ${info.response}`;
     }
   });
 };

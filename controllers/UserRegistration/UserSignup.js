@@ -2,11 +2,17 @@ const bcrypt = require("bcryptjs");
 const UserSignUp = require("../../models/UserRegistration/UserSignUp");
 const SendEmail = require("../../Util/SendEmail");
 
-exports.post_user_signUp = async (req, res) => {
+exports.postUserSignUp = async (req, res) => {
+  //destruct the req body
   const { fullName, email, password, phoneNumber } = req.body;
+
+  //checking if email exist
   const emailExist = await UserSignUp.findOne({ email: email });
-  if (emailExist)
+  if (emailExist) {
     return res.status(400).send({ message: "user already exist" });
+  }
+
+  //assigning the salt to use
   const saltR = 10;
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
@@ -22,7 +28,6 @@ exports.post_user_signUp = async (req, res) => {
             message: "user validation failed",
             status: "error",
           });
-          console.error(err);
         } else {
           const member = new UserSignUp({
             //creating an instance of User data
@@ -41,7 +46,6 @@ exports.post_user_signUp = async (req, res) => {
               status: "success",
             });
             // SendEmail.SendEmail(email, password, fullName);
-            console.log(member);
           } catch (error) {
             res.status(400).send({
               message: error,
