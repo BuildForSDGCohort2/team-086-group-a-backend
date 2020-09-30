@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const options = Object.freeze({
-  personal: "personal",
-  organization: "organization",
+  roadSide: "road side",
+  restaurant: "restaurant",
+  hotel: "hotel",
 });
 
 const vendorMenu = {
@@ -20,8 +21,8 @@ const vendorMenu = {
 
 const businessType = {
   type: String,
-  enum: ["personal", "organization"],
-  default: "personal",
+  enum: ["road side", "restaurant", "hotel"],
+  default: "road side",
   required: true,
 };
 
@@ -40,11 +41,12 @@ const vendorCategory = [];
 
 const VendorsSignup = new Schema(
   {
-    owner: { type: String, required: true },
-    business: { type: String, min: 6, maxlength: 50, required: true },
+    owner: { type: String, maxlength: 30, required: true },
+    businessName: { type: String, min: 6, maxlength: 50, required: true },
     location: { type: String, required: true },
     email: { type: String, required: true, maxlength: 30, unique: true },
     password: { type: String, min: 8, maxlength: 30, required: true },
+    number: { type: Number, required: true, min: 9 },
     businessType: businessType,
     vendorMenu: vendorMenu,
     orders: [orders],

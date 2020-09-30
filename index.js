@@ -4,6 +4,7 @@ require("dotenv").config();
 const cors = require("cors");
 const SignupUser = require("./routes/UserRegisteration/User");
 const LoginUser = require("./routes/UserRegisteration/userLogin");
+const vendorSignup = require("./routes/vendorsRegistration/vendorsSignup");
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const options = {
   useNewUrlParser: true,
@@ -20,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/thinkspicefood", SignupUser);
 app.use("/api/thinkspicefood", LoginUser);
+app.use("/api/thinkspicefood", vendorSignup);
+
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",
