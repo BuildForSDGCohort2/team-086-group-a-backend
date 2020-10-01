@@ -9,14 +9,14 @@ exports.postUserSignUp = async (req, res) => {
   //checking if email exist
   const emailExist = await UserSignUp.findOne({ email: email });
   if (emailExist) {
-    return res.status(400).send({ message: "user already exist" });
+    return res.status(400).json({ message: "user already exist" });
   }
 
   //assigning the salt to use
   const saltR = 10;
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
-      res.status(400).send({
+      res.status(400).json({
         message: "unathorized  error",
         status: "error",
       });
@@ -24,7 +24,7 @@ exports.postUserSignUp = async (req, res) => {
       //hashing the password
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
-          res.status(401).send({
+          res.status(401).json({
             message: "user validation failed",
             status: "error",
           });
@@ -40,15 +40,15 @@ exports.postUserSignUp = async (req, res) => {
           try {
             //saving the new member to mongodb
             await member.save();
-            res.status(201).send({
+            res.status(201).json({
               massage: "User added successfully",
               userId: member._id,
               status: "success",
             });
 
-            // SendEmail.SendEmail(email, password, fullName);
+            // send.send(email, password, fullName);
           } catch (error) {
-            res.status(400).send({
+            res.status(400).json({
               message: error,
               status: "error",
             });

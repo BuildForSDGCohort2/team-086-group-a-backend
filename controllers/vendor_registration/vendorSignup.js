@@ -27,14 +27,14 @@ const vendorSignUp = async (req, res, next) => {
     //send a message if error
     return res
       .status(400)
-      .send({ message: error.details[0].message.split('"').join("") });
+      .json({ message: error.details[0].message.split('"').join("") });
   }
 
   //check if email exist in the database
   const emailExist = await vendorsSchema.findOne({ email: email });
 
   if (emailExist) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: "email already exist",
     });
   }
@@ -43,7 +43,7 @@ const vendorSignUp = async (req, res, next) => {
   const saltR = 10;
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
-      return res.status(500).send({
+      return res.status(500).json({
         message: "internal server error",
         status: "error",
       });
@@ -52,7 +52,7 @@ const vendorSignUp = async (req, res, next) => {
     //hashing the password
     bcrypt.hash(password, salt, async (err, hash) => {
       if (err) {
-        return res.status(401).send({
+        return res.status(401).json({
           message: "user validation failed",
           status: "error",
         });
@@ -73,15 +73,15 @@ const vendorSignUp = async (req, res, next) => {
       try {
         //saving the new member to mongodb
         await Vendor.save();
-        res.status(201).send({
+        res.status(201).json({
           massage: "vendor added successfully",
           vendorId: Vendor._id,
           status: "success",
         });
-        console.log("object", Vendor);
+
         // SendEmail.SendEmail(email, password, fullName);
       } catch (error) {
-        return res.status(401).send({
+        return res.status(401).json({
           message: error.message,
           status: "error",
         });

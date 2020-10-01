@@ -12,14 +12,15 @@ module.exports.postUserLogin = async (req, res) => {
   const user = await UserSignUp.findOne({ email: email });
 
   if (!user) {
-    return res.status(400).send({ message: "email or password incorrect" });
+    return res.status(400).json({ message: "email or password incorrect" });
   }
 
   //checking if password exist in the data base;
   const isValidUser = await bcrypt.compare(password, user.password);
   if (!isValidUser) {
-    return res.status(400).send({
+    return res.status(400).json({
       message: "password incorrect",
+      status: "error",
     });
   }
 
@@ -28,8 +29,8 @@ module.exports.postUserLogin = async (req, res) => {
     expiresIn: "24h", // expires in 24 hours
   });
 
-  //chcking if the header holds the token and sending the token to the user
-  res.header("user-register-token", token).send({
+  //chcking if the header holds the token and jsoning the token to the user
+  res.header("user-register-token", token).json({
     message: "login successful",
     status: "success",
     userId: user._id,
