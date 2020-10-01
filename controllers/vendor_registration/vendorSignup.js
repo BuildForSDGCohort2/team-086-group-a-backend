@@ -1,4 +1,6 @@
-const vendorsSchema = require("../../models/vendor_registration/vendor_signup");
+const {
+  vendorsSchema,
+} = require("../../models/vendor_registration/vendor_signup");
 const {
   vendorsValidator,
 } = require("../../middlewares/request-validators/vendor_registration_validator");
@@ -8,9 +10,10 @@ const bcrypt = require("bcryptjs");
 const vendorSignUp = async (req, res, next) => {
   //getting the vendor signup data
   const {
-    owner,
     number,
     businessType,
+    subscriptionPlan,
+    taxId,
     location,
     businessName,
     email,
@@ -18,7 +21,7 @@ const vendorSignUp = async (req, res, next) => {
   } = req.body;
 
   //checking for error
-  const { error } = await vendorsValidator.validate(req.body);
+  const { error } = vendorsValidator.validate(req.body);
 
   if (error) {
     //send a message if error
@@ -55,12 +58,13 @@ const vendorSignUp = async (req, res, next) => {
         });
       }
 
-      const vendor = new vendorsSchema({
-        //creating an instance of User data
-        owner,
+      const Vendor = new vendorsSchema({
+        //creating an instance of vendor data
         businessName,
         businessType,
+        subscriptionPlan,
         location,
+        taxId,
         email,
         password: hash,
         number,
@@ -68,13 +72,13 @@ const vendorSignUp = async (req, res, next) => {
 
       try {
         //saving the new member to mongodb
-        await vendor.save();
+        await Vendor.save();
         res.status(201).send({
           massage: "vendor added successfully",
-          userId: vendor._id,
+          vendorId: Vendor._id,
           status: "success",
         });
-        console.log("object", vendor);
+        console.log("object", Vendor);
         // SendEmail.SendEmail(email, password, fullName);
       } catch (error) {
         return res.status(401).send({
