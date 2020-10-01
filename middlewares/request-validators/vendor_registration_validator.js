@@ -11,4 +11,9 @@ const vendorsValidator = Joi.object({
   businessName: Joi.string().min(10).required(),
 });
 
-module.exports = { vendorsValidator };
+const vendorSigninValidator = Joi.object({
+  password: Joi.string().min(8).required().empty(),
+  vendorId: Joi.string().required().empty(),
+});
+
+module.exports = { vendorsValidator, vendorSigninValidator };

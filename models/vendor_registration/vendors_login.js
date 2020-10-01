@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const vendorLogin = new Schema(
   {
-    email: { type: String, maxlength: 100, required: true, unique: true },
+    vendorId: { type: Schema.Types.ObjectId, maxlength: 100, required: true },
     password: { type: String, required: true, maxlength: 200, minlength: 8 },
   },
   { timestamps: true }
