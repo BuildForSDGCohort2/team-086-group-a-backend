@@ -39,14 +39,26 @@ const orders = {
 ``;
 const vendorCategory = [];
 
+const plan = Object.freeze({
+  monthly: "monthly",
+  quaterly: "quaterly",
+  annually: "annually",
+});
+
+const subscriptionPlan = {
+  type: String,
+  enum: ["monthly", "quarterly", "annually"],
+  default: "monthly",
+};
 const VendorsSignup = new Schema(
   {
-    owner: { type: String, maxlength: 30, required: true },
     businessName: { type: String, min: 6, maxlength: 50, required: true },
     location: { type: String, required: true },
     email: { type: String, required: true, maxlength: 30, unique: true },
     password: { type: String, min: 8, maxlength: 300, required: true },
     number: { type: Number, required: true, min: 9 },
+    taxId: { type: String, required: true },
+    subscriptionPlan: subscriptionPlan,
     businessType: businessType,
     vendorMenu: vendorMenu,
     orders: [orders],
@@ -57,4 +69,4 @@ const VendorsSignup = new Schema(
 
 const vendorsSchema = mongoose.model("vendorsSchema", VendorsSignup);
 
-module.exports = vendorsSchema;
+module.exports = { vendorsSchema, options, plan };
