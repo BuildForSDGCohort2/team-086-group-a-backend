@@ -39,6 +39,14 @@ const orders = {
 ``;
 const vendorCategory = [];
 
+const paymentType = {
+  mobileTransfer: { type: String },
+  card: { type: String },
+  account: { type: String },
+  enum: ["mobile transfer", "card", "account"],
+  default: "card",
+};
+
 const plan = Object.freeze({
   monthly: "monthly",
   quaterly: "quaterly",
@@ -50,6 +58,7 @@ const subscriptionPlan = {
   enum: ["monthly", "quarterly", "annually"],
   default: "monthly",
 };
+
 const VendorsSignup = new Schema(
   {
     businessName: { type: String, min: 6, maxlength: 50, required: true },
