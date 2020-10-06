@@ -1,11 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const SignupUser = require("./routes/UserRegisteration/User");
-const LoginUser = require("./routes/UserRegisteration/userLogin");
-const vendorSignup = require("./routes/vendorsRegistration/vendorsSignup");
-const vendorsignin = require("./routes/vendorsRegistration/vendorSignin");
+
+const postUsersRouter = require("./routes/UserRegisteration/User");
+const loginUsersRouter = require("./routes/UserRegisteration/userLogin");
+const postMenuRouter = require("./routes/vendorMenu/postMenu");
 const Payments = require("./routes/vendorsRegistration/flutterPaymentScheme");
-const VendorsPostMenu = require("./routes/vendorMenu/postMenu");
+const getAllMenusRouter = require("./routes/vendorMenu/getAllMenus");
+
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const cors = require("cors");
 require("dotenv").config();
@@ -24,12 +25,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/thinkspicefood", SignupUser);
-app.use("/api/thinkspicefood", LoginUser);
-app.use("/api/thinkspicefood", vendorSignup);
-app.use("/api/thinkspicefood", vendorsignin);
+app.use("/api/thinkspicefood", postUsersRouter);
+app.use("/api/thinkspicefood", loginUsersRouter);
 app.use("/api/thinkspicefood", Payments);
-app.use("/api/thinkspicefood", VendorsPostMenu);
+app.use("/api/thinkspicefood", postMenuRouter);
+app.use("/api/thinkspicefood", getAllMenusRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",
