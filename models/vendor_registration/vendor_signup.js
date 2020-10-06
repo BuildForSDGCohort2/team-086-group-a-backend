@@ -7,18 +7,6 @@ const options = Object.freeze({
   hotel: "hotel",
 });
 
-const vendorMenu = {
-  name: { type: String, maxlength: 10 },
-  type: { type: String, maxlength: 10 },
-  image: { type: String, maxlength: 10 },
-  desc: { type: String, maxlength: 100 },
-  price: { type: Number },
-  vendorId: { type: String },
-  discount: { type: String },
-  readyMeal: { type: Boolean, default: false },
-  offers: { type: Boolean, default: false },
-};
-
 const businessType = {
   type: String,
   enum: ["road side", "restaurant", "hotel"],
@@ -26,17 +14,6 @@ const businessType = {
   required: true,
 };
 
-const orders = {
-  name: { type: String, maxlength: 10 },
-  type: { type: String, maxlength: 10 },
-  image: { type: String, maxlength: 10 },
-  desc: { type: String, maxlength: 100 },
-  price: { type: Number },
-  offers: { type: Boolean, default: false },
-  discount: { type: String },
-  userId: { type: String },
-};
-``;
 const vendorCategory = [];
 
 const paymentType = {
@@ -69,13 +46,11 @@ const VendorsSignup = new Schema(
     taxId: { type: String, required: true },
     subscriptionPlan: subscriptionPlan,
     businessType: businessType,
-    vendorMenu: vendorMenu,
-    orders: [orders],
     vendorCategory: vendorCategory,
   },
   { timestamps: true }
 );
 
-const vendorsSchema = mongoose.model("vendorsSchema", VendorsSignup);
+const VendorsSchema = mongoose.model("vendorsSchema", VendorsSignup);
 
-module.exports = { vendorsSchema, options, plan };
+module.exports = { VendorsSchema, options, plan };

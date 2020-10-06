@@ -9,7 +9,9 @@ exports.postUserSignUp = async (req, res) => {
   //checking if email exist
   const emailExist = await UserSignUp.findOne({ email: email });
   if (emailExist) {
-    return res.status(400).json({ message: "user already exist" });
+    return res
+      .status(400)
+      .json({ message: "user already exist", status: "error" });
   }
 
   //assigning the salt to use
