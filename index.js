@@ -11,6 +11,7 @@ const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
 
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const cors = require("cors");
+const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
 require("dotenv").config();
 
 const options = {
@@ -27,13 +28,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/thinkspicefood", postUsersRouter);
-app.use("/api/thinkspicefood", loginUsersRouter);
-app.use("/api/thinkspicefood", Payments);
-app.use("/api/thinkspicefood", postMenuRouter);
-app.use("/api/thinkspicefood", getAllMenusRouter);
-app.use("/api/thinkspicefood", getOneMenuRouter);
-app.use("/api/thinkspicefood", updateMenuRouter);
+app.use(postUsersRouter);
+app.use(loginUsersRouter);
+app.use(Payments);
+app.use(postMenuRouter);
+app.use(getAllMenusRouter);
+app.use(getOneMenuRouter);
+app.use(updateMenuRouter);
+app.use(deleteMenuRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",

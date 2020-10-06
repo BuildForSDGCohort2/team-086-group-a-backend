@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { bool } = require("joi");
+
 const Schema = mongoose.Schema;
 
 const VendorMenu = new Schema(

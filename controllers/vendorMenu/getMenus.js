@@ -19,8 +19,8 @@ module.exports.getAllMenus = async (req, res) => {
   }
 
   //send a success response
-  return res.status(201).json({
-    message: GetMenuBysSpecifiedVendor,
+  return res.status(200).json({
+    data: GetMenuBysSpecifiedVendor,
     status: "success",
   });
 };
