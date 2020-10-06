@@ -6,6 +6,7 @@ const loginUsersRouter = require("./routes/UserRegisteration/userLogin");
 const postMenuRouter = require("./routes/vendorMenu/postMenu");
 const Payments = require("./routes/vendorsRegistration/flutterPaymentScheme");
 const getAllMenusRouter = require("./routes/vendorMenu/getAllMenus");
+const getOneMenuRouter = require("./routes/vendorMenu/getOneMenu");
 
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const cors = require("cors");
@@ -30,6 +31,7 @@ app.use("/api/thinkspicefood", loginUsersRouter);
 app.use("/api/thinkspicefood", Payments);
 app.use("/api/thinkspicefood", postMenuRouter);
 app.use("/api/thinkspicefood", getAllMenusRouter);
+app.use("/api/thinkspicefood", getOneMenuRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",

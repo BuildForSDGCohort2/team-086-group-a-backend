@@ -5,19 +5,22 @@ module.exports.getAllMenus = async (req, res) => {
   const { vendorId, busines_name } = req.params;
 
   //get all menus of the specified vendor
-  const GetMenusSpecifiedVendor = await VendorMenuList.find({
+  const GetMenuBysSpecifiedVendor = await VendorMenuList.find({
     vendorId: vendorId,
     brandName: busines_name,
   });
 
-  if (!GetMenusSpecifiedVendor.length) {
+  //send an error response
+  if (!GetMenuBysSpecifiedVendor.length) {
     return res.status(400).json({
       message: "no record of the vendors menu was found",
       status: "error",
     });
   }
+
+  //send a success response
   return res.status(201).json({
-    message: GetMenusSpecifiedVendor,
+    message: GetMenuBysSpecifiedVendor,
     status: "success",
   });
 };
