@@ -14,8 +14,6 @@ const businessType = {
   required: true,
 };
 
-const vendorCategory = [];
-
 const paymentType = {
   mobileTransfer: { type: String },
   card: { type: String },
@@ -46,7 +44,6 @@ const VendorsSignup = new Schema(
     taxId: { type: String, required: true },
     subscriptionPlan: subscriptionPlan,
     businessType: businessType,
-    vendorCategory: vendorCategory,
   },
   { timestamps: true }
 );
