@@ -1,11 +1,11 @@
 const {
-  vendorsSchema,
-} = require("../../models/vendor_registration/vendor_signup");
-const {
   vendorsValidator,
 } = require("../../middlewares/request-validators/vendor_registration_validator");
 
 const bcrypt = require("bcryptjs");
+const {
+  VendorsSchema,
+} = require("../../models/vendor_registration/vendor_signup");
 
 const vendorSignUp = async (req, res, next) => {
   //getting the vendor signup data
@@ -31,7 +31,7 @@ const vendorSignUp = async (req, res, next) => {
   }
 
   //check if email exist in the database
-  const emailExist = await vendorsSchema.findOne({ email: email });
+  const emailExist = await VendorsSchema.findOne({ email: email });
 
   if (emailExist) {
     return res.status(400).json({
@@ -58,7 +58,7 @@ const vendorSignUp = async (req, res, next) => {
         });
       }
 
-      const Vendor = new vendorsSchema({
+      const Vendor = new VendorsSchema({
         //creating an instance of vendor data
         businessName,
         businessType,

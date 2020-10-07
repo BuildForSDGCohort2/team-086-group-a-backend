@@ -64,7 +64,7 @@ module.exports.postMenus = async (req, res) => {
     });
   } catch (error) {
     res.status(401).json({
-      message: `user is unathorized error occured in ${error}`,
+      message: `user is unathorized error`,
       status: "error",
     });
   }

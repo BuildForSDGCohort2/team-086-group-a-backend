@@ -12,7 +12,9 @@ const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const cors = require("cors");
 const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
-const vendorCategoryRouter = require("./routes/vendorMenu/PostCategory");
+const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
+const vendorSignUpRouter = require("./routes/vendorsRegistration/vendorsSignup");
+const getCategoryRouter = require("./routes/vendorCategory/getCategory");
 require("dotenv").config();
 
 const options = {
@@ -31,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/", postUsersRouter);
 app.use("/api/v1/", loginUsersRouter);
+app.use("/api/v1/", vendorSignUpRouter);
 app.use("/api/v1/", Payments);
 app.use("/api/v1/", postMenuRouter);
 app.use("/api/v1/", getAllMenusRouter);
@@ -38,6 +41,7 @@ app.use("/api/v1/", getOneMenuRouter);
 app.use("/api/v1/", updateMenuRouter);
 app.use("/api/v1/", deleteMenuRouter);
 app.use("/api/v1/", vendorCategoryRouter);
+app.use("/api/v1/", getCategoryRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",

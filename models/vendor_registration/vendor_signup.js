@@ -2,19 +2,17 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const options = Object.freeze({
-  roadSide: "road side",
+  roadSide: "roadside",
   restaurant: "restaurant",
   hotel: "hotel",
 });
 
 const businessType = {
   type: String,
-  enum: ["road side", "restaurant", "hotel"],
-  default: "road side",
+  enum: ["roadside", "restaurant", "hotel"],
+  default: "roadside",
   required: true,
 };
-
-const vendorCategory = [];
 
 const paymentType = {
   mobileTransfer: { type: String },
@@ -46,7 +44,6 @@ const VendorsSignup = new Schema(
     taxId: { type: String, required: true },
     subscriptionPlan: subscriptionPlan,
     businessType: businessType,
-    vendorCategory: vendorCategory,
   },
   { timestamps: true }
 );
