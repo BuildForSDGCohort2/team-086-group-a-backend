@@ -16,6 +16,7 @@ exports.postUserSignUp = async (req, res) => {
 
   //assigning the salt to use
   const saltR = 10;
+
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
       res.status(400).json({

@@ -35,7 +35,7 @@ const vendorSignUp = async (req, res, next) => {
 
   if (emailExist) {
     return res.status(400).json({
-      message: "email already exist",
+      message: "user already exist",
     });
   }
 
@@ -53,7 +53,7 @@ const vendorSignUp = async (req, res, next) => {
     bcrypt.hash(password, salt, async (err, hash) => {
       if (err) {
         return res.status(401).json({
-          message: "user validation failed",
+          message: "vendor validation failed",
           status: "error",
         });
       }
