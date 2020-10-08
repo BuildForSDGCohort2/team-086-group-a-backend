@@ -26,6 +26,10 @@ const storage = new CloudinaryStorage({
 
 const parser = multer({ storage: storage });
 
-postMenuRouter.post("/dashboard/vendor/menu", parser.single("file"), postMenus);
+postMenuRouter.post(
+  "/dashboard/vendor/menu/:vendor_id/:business_name",
+  parser.single("file"),
+  postMenus
+);
 
 module.exports = postMenuRouter;
