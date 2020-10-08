@@ -16,6 +16,7 @@ const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
 const vendorSignUpRouter = require("./routes/vendorsRegistration/vendorsSignup");
 const getCategoryRouter = require("./routes/vendorCategory/getCategory");
 const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
+const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
 require("dotenv").config();
 
 const options = {
@@ -44,6 +45,7 @@ app.use("/api/v1/", deleteMenuRouter);
 app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
+app.use("/api/v1/", deleteCategoryRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",
