@@ -10,7 +10,6 @@ module.exports.postMenus = async (req, res) => {
   const {
     name,
     type,
-    image,
     desc,
     price,
     discount,
@@ -46,7 +45,7 @@ module.exports.postMenus = async (req, res) => {
   const NewMenu = new VendorMenuList({
     name,
     type,
-    image,
+    image: req.file,
     desc,
     price,
     vendorId,
