@@ -7,7 +7,7 @@ const VendorMenu = new Schema(
     brandName: { type: String, maxlength: 30 },
     name: { type: String, maxlength: 30 },
     type: { type: String, maxlength: 30 },
-    image: { type: String, maxlength: 300 },
+    image: { type: String, maxlength: 300, required: true },
     desc: { type: String, maxlength: 120 },
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
