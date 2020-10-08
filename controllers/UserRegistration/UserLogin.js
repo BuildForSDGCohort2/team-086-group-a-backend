@@ -25,7 +25,7 @@ module.exports.postUserLogin = async (req, res) => {
   }
 
   //signing a token that will expire every 24hours
-  const token = jwt.sign({ _id: user._id }, TOKEN_SECRET, {
+  const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRET, {
     expiresIn: "24h", // expires in 24 hours
   });
 

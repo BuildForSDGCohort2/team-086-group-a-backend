@@ -26,8 +26,8 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const PORT = process.env.Port || 3000;
-const MONGODB_URI = "mongodb://localhost:07017(express.server)";
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();
 
 app.use(cors());
