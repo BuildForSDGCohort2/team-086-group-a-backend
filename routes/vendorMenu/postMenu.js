@@ -4,15 +4,15 @@ const URL = require("url");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const { postMenus } = require("../../controllers/vendorMenu/postMenu");
-
+require("dotenv").config();
 const { CLOUDINARY_ENV_URL } = process.env;
 
-const cloudinary_url = URL.parse(`${process.env.CLOUDINARY_URL}`);
+const cloudinary_url = URL.parse(`${process.env.CLOUDINARY_ENV_URL}`);
 
 cloudinary.config({
   cloud_name: cloudinary_url.host,
-  api_key: cloudinary_url.auth.split(":")[0],
-  api_secret: cloudinary_url.auth.split(":")[1],
+  api_key: cloudinary_url.path.split(":")[0],
+  api_secret: cloudinary_url.path.split(":")[1],
 });
 
 const storage = new CloudinaryStorage({

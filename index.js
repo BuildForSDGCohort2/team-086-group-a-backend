@@ -63,5 +63,5 @@ mongoose
 
 //start the server
 app.listen(PORT, () => {
-  console.warn(`server ready on http://localhost:${PORT}`);
+  console.warn(`server ready on${PORT}`);
 });
