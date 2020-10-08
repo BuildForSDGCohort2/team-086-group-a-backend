@@ -48,11 +48,11 @@ module.exports.postMenus = async (req, res) => {
     image: req.file,
     desc,
     price,
-    vendorId,
+    vendorId: vendor_id,
     discount,
     readyMeal,
     offers,
-    brandName,
+    brandName: business_name,
   });
 
   try {
