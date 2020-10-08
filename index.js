@@ -46,11 +46,6 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
-app.get("/", (req, res) => {
-  res.json({
-    message: "hello am verified",
-  });
-});
 
 mongoose
   .connect(MONGODB_URI, options)
