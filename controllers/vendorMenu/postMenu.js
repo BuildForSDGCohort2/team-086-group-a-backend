@@ -11,6 +11,7 @@ module.exports.postMenus = async (req, res) => {
     name,
     type,
     desc,
+    image,
     price,
     discount,
     readyMeal,
