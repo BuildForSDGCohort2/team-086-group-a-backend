@@ -7,17 +7,7 @@ const {
 const VendorMenuList = require("../../models/vendorsMenu/VendorsMenu");
 
 module.exports.postMenus = async (req, res) => {
-  const {
-    name,
-    type,
-    desc,
-    image,
-    price,
-    discount,
-    readyMeal,
-    offers,
-    brandName,
-  } = req.body;
+  const { name, type, desc, price, discount, readyMeal, offers } = req.body;
 
   const { vendor_id, business_name } = req.params;
 
@@ -46,7 +36,7 @@ module.exports.postMenus = async (req, res) => {
   const NewMenu = new VendorMenuList({
     name,
     type,
-    image: req.file,
+    image: req.file.path,
     desc,
     price,
     vendorId: vendor_id,
