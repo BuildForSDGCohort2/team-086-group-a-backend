@@ -8,7 +8,7 @@ const vendorsValidator = Joi.object({
   email: Joi.string().min(6).max(300).required().email(),
   password: Joi.string().min(8).required(),
   location: Joi.string().min(10).required(),
-  businessName: Joi.string().min(10).required(),
+  businessName: Joi.string().min(5).required(),
 });
 
 const vendorSigninValidator = Joi.object({

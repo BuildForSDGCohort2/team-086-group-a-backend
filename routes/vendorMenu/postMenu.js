@@ -4,6 +4,7 @@ const URL = require("url");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const { postMenus } = require("../../controllers/vendorMenu/postMenu");
+const { vendorVerifyToken } = require("../../middlewares/VendorsVerifyToken");
 require("dotenv").config();
 const { CLOUDINARY_ENV_URL } = process.env;
 
@@ -28,6 +29,7 @@ const parser = multer({ storage: storage });
 
 postMenuRouter.post(
   "/dashboard/vendor/menu/:vendor_id/:business_name",
+  vendorVerifyToken,
   parser.single("file"),
   postMenus
 );

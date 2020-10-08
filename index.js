@@ -10,6 +10,7 @@ const getOneMenuRouter = require("./routes/vendorMenu/getOneMenu");
 const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
 
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
+const { vendorVerifyToken } = require("./middlewares/VendorsVerifyToken");
 const cors = require("cors");
 const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
 const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
@@ -17,6 +18,7 @@ const vendorSignUpRouter = require("./routes/vendorsRegistration/vendorsSignup")
 const getCategoryRouter = require("./routes/vendorCategory/getCategory");
 const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
 const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
+const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
 require("dotenv").config();
 
 const options = {
@@ -36,6 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/", postUsersRouter);
 app.use("/api/v1/", loginUsersRouter);
 app.use("/api/v1/", vendorSignUpRouter);
+app.use("/api/v1/", vendorSignInRouter);
 app.use("/api/v1/", Payments);
 app.use("/api/v1/", postMenuRouter);
 app.use("/api/v1/", getAllMenusRouter);
@@ -46,8 +49,8 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
-app.get("/", (req, res) => {
-  res.send({
+app.get("/api/v1/verify-vendor", vendorVerifyToken, (req, res) => {
+  res.json({
     message: "hello am verified",
   });
 });

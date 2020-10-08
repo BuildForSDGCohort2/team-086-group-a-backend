@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-module.exports.userVerifyToken = (req, res, next) => {
+module.exports.vendorVerifyToken = (req, res, next) => {
   //get the token secret from the .env file
-  const { TOKEN_SECRET } = process.env;
+  const { VENDOR_TOKEN_SECRETE } = process.env;
   const token = req.header("verdor-verify-token");
 
   if (!token) {
@@ -12,10 +12,10 @@ module.exports.userVerifyToken = (req, res, next) => {
   }
 
   try {
-    const verified = jwt.verify(token, TOKEN_SECRET);
-
+    const verified = jwt.verify(token, VENDOR_TOKEN_SECRETE);
+    console.log("verified", verified);
     //getting the userId and the token duration;
-    req.user = verified;
+    req.vendor = verified;
     next();
   } catch (error) {
     res.status(401).send({
