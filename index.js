@@ -12,6 +12,11 @@ const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
 const { userVerifyToken } = require("./middlewares/userVerifyToken");
 const cors = require("cors");
 const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
+const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
+const vendorSignUpRouter = require("./routes/vendorsRegistration/vendorsSignup");
+const getCategoryRouter = require("./routes/vendorCategory/getCategory");
+const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
+const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
 require("dotenv").config();
 
 const options = {
@@ -21,21 +26,26 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const PORT = process.env.Port || 3000;
-const MONGODB_URI = "mongodb://localhost:07017(express.server)";
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(postUsersRouter);
-app.use(loginUsersRouter);
-app.use(Payments);
-app.use(postMenuRouter);
-app.use(getAllMenusRouter);
-app.use(getOneMenuRouter);
-app.use(updateMenuRouter);
-app.use(deleteMenuRouter);
+app.use("/api/v1/", postUsersRouter);
+app.use("/api/v1/", loginUsersRouter);
+app.use("/api/v1/", vendorSignUpRouter);
+app.use("/api/v1/", Payments);
+app.use("/api/v1/", postMenuRouter);
+app.use("/api/v1/", getAllMenusRouter);
+app.use("/api/v1/", getOneMenuRouter);
+app.use("/api/v1/", updateMenuRouter);
+app.use("/api/v1/", deleteMenuRouter);
+app.use("/api/v1/", vendorCategoryRouter);
+app.use("/api/v1/", getCategoryRouter);
+app.use("/api/v1/", updateCategoryRouter);
+app.use("/api/v1/", deleteCategoryRouter);
 app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
   res.send({
     message: "hello am verified",
@@ -53,5 +63,5 @@ mongoose
 
 //start the server
 app.listen(PORT, () => {
-  console.warn(`server ready on http://localhost:${PORT}`);
+  console.warn(`server ready on${PORT}`);
 });

@@ -10,15 +10,15 @@ module.exports.postMenus = async (req, res) => {
   const {
     name,
     type,
-    image,
     desc,
     price,
-    vendorId,
     discount,
     readyMeal,
     offers,
     brandName,
   } = req.body;
+
+  const { vendor_id, business_name } = req.params;
 
   const { error } = vendorsMenuValidator.validate(req.body);
   if (error) {
@@ -29,8 +29,9 @@ module.exports.postMenus = async (req, res) => {
   }
 
   //checking if the person is a vendor
-  const verifyVendorId = await VendorsSchema.findOne({
-    _id: vendorId,
+  const verifyVendorId = await VendorsSchema.find({
+    _id: vendor_id,
+    brandName: business_name,
   });
 
   //verifying the if
@@ -44,7 +45,7 @@ module.exports.postMenus = async (req, res) => {
   const NewMenu = new VendorMenuList({
     name,
     type,
-    image,
+    image: req.file,
     desc,
     price,
     vendorId,
@@ -62,7 +63,8 @@ module.exports.postMenus = async (req, res) => {
     });
   } catch (error) {
     res.status(401).json({
-      message: `user is unathorized error occured in ${error}`,
+      message: `user is unathorized error`,
+      status: "error",
     });
   }
 };

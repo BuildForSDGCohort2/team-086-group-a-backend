@@ -12,12 +12,12 @@ exports.deleteMenu = async (req, res) => {
         });
       } else if (removed === null) {
         return res.status(401).json({
-          message: "no item bearing the id was found",
+          message: "no match was found",
           status: "error",
         });
       }
       return res.status(200).json({
-        data: removed,
+        message: "menu deleted successfully",
         status: "success",
       });
     }
