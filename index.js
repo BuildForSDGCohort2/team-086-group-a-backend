@@ -9,8 +9,6 @@ const getAllMenusRouter = require("./routes/vendorMenu/getAllMenus");
 const getOneMenuRouter = require("./routes/vendorMenu/getOneMenu");
 const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
 
-const { userVerifyToken } = require("./middlewares/userVerifyToken");
-const { vendorVerifyToken } = require("./middlewares/VendorsVerifyToken");
 const cors = require("cors");
 const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
 const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
@@ -49,11 +47,6 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
-app.get("/api/v1/verify-vendor", vendorVerifyToken, (req, res) => {
-  res.json({
-    message: "hello am verified",
-  });
-});
 
 mongoose
   .connect(MONGODB_URI, options)
