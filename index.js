@@ -46,7 +46,7 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
-app.get("/api/thinkspicefood/userslist", userVerifyToken, (req, res) => {
+app.get("/", (req, res) => {
   res.send({
     message: "hello am verified",
   });
