@@ -8,8 +8,6 @@ const Payments = require("./routes/vendorsRegistration/flutterPaymentScheme");
 const getAllMenusRouter = require("./routes/vendorMenu/getAllMenus");
 const getOneMenuRouter = require("./routes/vendorMenu/getOneMenu");
 const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
-
-const cors = require("cors");
 const deleteMenuRouter = require("./routes/vendorMenu/deleteMenu");
 const vendorCategoryRouter = require("./routes/vendorCategory/PostCategory");
 const vendorSignUpRouter = require("./routes/vendorsRegistration/vendorsSignup");
@@ -17,6 +15,7 @@ const getCategoryRouter = require("./routes/vendorCategory/getCategory");
 const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
 const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
 const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
+const cors = require("cors");
 require("dotenv").config();
 
 const options = {
@@ -47,6 +46,11 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
+app.get("/", (req, res) => {
+  res.json({
+    message: "hello am verified",
+  });
+});
 
 mongoose
   .connect(MONGODB_URI, options)
