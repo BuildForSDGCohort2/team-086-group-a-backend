@@ -15,26 +15,26 @@ module.exports.postUserLogin = async (req, res, next) => {
     return res.status(400).json({ message: "email or password incorrect" });
   }
 
-  //checking if password exist in the data base;
-  bcrypt.compare(password, user.password, (err, hash) => {
-    if (err) {
-      return res.status(400).json({
-        message: error,
-        status: "error",
-      });
-    } else {
-      //signing a token that will expire every 24hours
-      const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {
-        expiresIn: "24h", // expires in 24 hours
-      });
+  const verifyPassword = await bcrypt.compare(password, user.password);
 
-      //chcking if the header holds the token and jsoning the token to the user
-      res.header(USER_TOKEN_KEY, token).json({
-        message: "login successful",
-        status: "success",
-        userId: user._id,
-        token,
-      });
-    }
+  //verify using hash password
+  if (!verifyPassword) {
+    return res.status(400).json({
+      message: "password incorrect",
+      status: "error",
+    });
+  }
+
+  //signing a token that will expire every 24hours
+  const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {
+    expiresIn: "24h", // expires in 24 hours
+  });
+
+  //chcking if the header holds the token and jsoning the token to the user
+  res.header(USER_TOKEN_KEY, token).json({
+    message: "login successful",
+    status: "success",
+    userId: user._id,
+    token,
   });
 };
