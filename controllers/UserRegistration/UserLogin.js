@@ -16,7 +16,7 @@ module.exports.postUserLogin = async (req, res, next) => {
   }
 
   //checking if password exist in the data base;
-  bcrypt.compare(password, user.password, (err, res) => {
+  bcrypt.compare(password, user.password, (err, hash) => {
     if (err) {
       return res.status(400).json({
         message: error,
