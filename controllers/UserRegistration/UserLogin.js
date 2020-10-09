@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { USER_TOKEN_SECRETE, USER_TOKEN_KEY } = process.env; // getting the token secret
 
-module.exports.postUserLogin = async (req, res) => {
+module.exports.postUserLogin = async (req, res, next) => {
   //getting email and password of the the user
   const { email, password } = req.body;
 
@@ -16,13 +16,16 @@ module.exports.postUserLogin = async (req, res) => {
   }
 
   //checking if password exist in the data base;
-  const isValidUser = await bcrypt.compare(password, user.password);
-  if (!isValidUser) {
-    return res.status(400).json({
-      message: "password incorrect",
-      status: "error",
-    });
-  }
+  bcrypt.compare(password, user.password, (err, res) => {
+    if (err) {
+      return res.status(400).json({
+        message: error,
+        status: "error",
+      });
+    }
+
+    return next();
+  });
 
   //signing a token that will expire every 24hours
   const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {

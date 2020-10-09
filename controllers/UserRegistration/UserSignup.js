@@ -19,7 +19,7 @@ exports.postUserSignUp = async (req, res) => {
 
   bcrypt.genSalt(saltR, async (err, salt) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "unathorized  error",
         status: "error",
       });
@@ -27,7 +27,7 @@ exports.postUserSignUp = async (req, res) => {
       //hashing the password
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
-          res.status(401).json({
+          return res.status(401).json({
             message: "user validation failed",
             status: "error",
           });
@@ -43,7 +43,7 @@ exports.postUserSignUp = async (req, res) => {
           try {
             //saving the new member to mongodb
             await member.save();
-            res.status(201).json({
+            return res.status(201).json({
               massage: "User added successfully",
               userId: member._id,
               status: "success",
