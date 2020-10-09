@@ -22,21 +22,19 @@ module.exports.postUserLogin = async (req, res, next) => {
         message: error,
         status: "error",
       });
+    } else {
+      //signing a token that will expire every 24hours
+      const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {
+        expiresIn: "24h", // expires in 24 hours
+      });
+
+      //chcking if the header holds the token and jsoning the token to the user
+      res.header(USER_TOKEN_KEY, token).json({
+        message: "login successful",
+        status: "success",
+        userId: user._id,
+        token,
+      });
     }
-
-    return next();
-  });
-
-  //signing a token that will expire every 24hours
-  const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {
-    expiresIn: "24h", // expires in 24 hours
-  });
-
-  //chcking if the header holds the token and jsoning the token to the user
-  res.header(USER_TOKEN_KEY, token).json({
-    message: "login successful",
-    status: "success",
-    userId: user._id,
-    token,
   });
 };
