@@ -2,7 +2,7 @@ const LoginModel = require("../../models/UserRegistration/UserLogin");
 const UserSignUp = require("../../models/UserRegistration/UserSignUp");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { TOKEN_SECRET } = process.env; // getting the token secret
+const { USER_TOKEN_SECRETE, USER_TOKEN_KEY } = process.env; // getting the token secret
 
 module.exports.postUserLogin = async (req, res) => {
   //getting email and password of the the user
@@ -25,12 +25,12 @@ module.exports.postUserLogin = async (req, res) => {
   }
 
   //signing a token that will expire every 24hours
-  const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRET, {
+  const token = jwt.sign({ _id: user._id }, USER_TOKEN_SECRETE, {
     expiresIn: "24h", // expires in 24 hours
   });
 
   //chcking if the header holds the token and jsoning the token to the user
-  res.header("user-register-token", token).json({
+  res.header(USER_TOKEN_KEY, token).json({
     message: "login successful",
     status: "success",
     userId: user._id,

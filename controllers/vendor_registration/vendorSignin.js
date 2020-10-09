@@ -10,7 +10,7 @@ const {
 module.exports.vendorSignin = async (req, res) => {
   const { vendorId, password } = req.body;
 
-  const { VENDOR_TOKEN_SECRETE } = process.env;
+  const { VENDOR_TOKEN_SECRETE, VENDOR_TOKEN_KEY } = process.env;
 
   const { error } = vendorSigninValidator.validate(req.body);
 
@@ -47,7 +47,7 @@ module.exports.vendorSignin = async (req, res) => {
   });
 
   //chcking if the header holds the token and sendind the token to the vendor
-  res.header("vendor-register-token", token).json({
+  res.header(VENDOR_TOKEN_KEY, token).json({
     message: "login successful",
     status: "success",
     vendorId: vendor._id,

@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports.vendorVerifyToken = (req, res, next) => {
   //get the token secret from the .env file
-  const { VENDOR_TOKEN_SECRETE } = process.env;
-  const token = req.header("verdor-verify-token");
+  const { VENDOR_TOKEN_SECRETE, VENDOR_TOKEN_KEY } = process.env;
+  const token = req.header(VENDOR_TOKEN_KEY);
 
   if (!token) {
     return res.status(401).send({
