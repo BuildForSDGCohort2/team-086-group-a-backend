@@ -16,6 +16,7 @@ const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
 const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
 const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
 const cors = require("cors");
+const reportChannelRouter = require("./routes/contact_channel/ReportChannel");
 require("dotenv").config();
 
 const options = {
@@ -46,6 +47,7 @@ app.use("/api/v1/", vendorCategoryRouter);
 app.use("/api/v1/", getCategoryRouter);
 app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
+app.use("/api/v1/", reportChannelRouter);
 
 mongoose
   .connect(MONGODB_URI, options)
