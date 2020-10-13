@@ -10,14 +10,13 @@ const {
 const vendorSignUp = async (req, res, next) => {
   //getting the vendor signup data
   const {
-    number,
-    businessType,
-    subscriptionPlan,
-    taxId,
-    location,
     businessName,
     email,
-    password,
+    officeAddress,
+    businessNumber,
+    businessType,
+    taxId,
+    subscriptionPlan,
   } = req.body;
 
   //checking for error
@@ -35,7 +34,7 @@ const vendorSignUp = async (req, res, next) => {
 
   if (emailExist) {
     return res.status(400).json({
-      message: "user already exist",
+      message: "vendor already exist",
     });
   }
 
@@ -50,9 +49,9 @@ const vendorSignUp = async (req, res, next) => {
     }
 
     //hashing the password
-    bcrypt.hash(password, salt, async (err, hash) => {
+    bcrypt.hash(taxId, salt, async (err, hash) => {
       if (err) {
-        return res.status(401).json({
+        return res.status(403).json({
           message: "vendor validation failed",
           status: "error",
         });
@@ -63,17 +62,16 @@ const vendorSignUp = async (req, res, next) => {
         businessName,
         businessType,
         subscriptionPlan,
-        location,
-        taxId,
+        officeAddress,
+        taxId: hash,
         email,
-        password: hash,
-        number,
+        businessNumber,
       });
 
       try {
         //saving the new member to mongodb
         await Vendor.save();
-        res.status(201).json({
+        res.status(200).json({
           massage: "vendor added successfully",
           vendorId: Vendor._id,
           status: "success",

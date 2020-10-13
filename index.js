@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const postUsersRouter = require("./routes/UserRegisteration/User");
 const loginUsersRouter = require("./routes/UserRegisteration/userLogin");
 const postMenuRouter = require("./routes/vendorMenu/postMenu");
-const Payments = require("./routes/vendorsRegistration/flutterPaymentScheme");
 const getAllMenusRouter = require("./routes/vendorMenu/getAllMenus");
 const getOneMenuRouter = require("./routes/vendorMenu/getOneMenu");
 const updateMenuRouter = require("./routes/vendorMenu/updateMenu");
@@ -18,6 +17,7 @@ const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
 const cors = require("cors");
 const postTestimonyRouter = require("./routes/testimony/postTestimony");
 const reportChannelRouter = require("./routes/contact_channel/ReportChannel");
+const verifyPaymentRouter = require("./routes/vendorsRegistration/paystackVerification");
 require("dotenv").config();
 
 const options = {
@@ -38,7 +38,7 @@ app.use("/api/v1/", postUsersRouter);
 app.use("/api/v1/", loginUsersRouter);
 app.use("/api/v1/", vendorSignUpRouter);
 app.use("/api/v1/", vendorSignInRouter);
-app.use("/api/v1/", Payments);
+app.use("/api/v1/", verifyPaymentRouter);
 app.use("/api/v1/", postMenuRouter);
 app.use("/api/v1/", getAllMenusRouter);
 app.use("/api/v1/", getOneMenuRouter);

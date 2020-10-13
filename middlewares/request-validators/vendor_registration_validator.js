@@ -1,14 +1,13 @@
 const Joi = require("joi");
 
 const vendorsValidator = Joi.object({
-  subscriptionPlan: Joi.string().required(),
+  businessName: Joi.string().min(9).required(),
+  email: Joi.string().min(6).max(300).required().email(),
+  officeAddress: Joi.string().min(10).required(),
   taxId: Joi.string().required(),
   businessType: Joi.string().min(4).required(),
-  number: Joi.string().min(9).required(),
-  email: Joi.string().min(6).max(300).required().email(),
-  password: Joi.string().min(8).required(),
-  location: Joi.string().min(10).required(),
-  businessName: Joi.string().min(5).required(),
+  businessNumber: Joi.string().min(8).required(),
+  subscriptionPlan: Joi.string().required(),
 });
 
 const vendorSigninValidator = Joi.object({

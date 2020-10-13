@@ -37,10 +37,9 @@ const subscriptionPlan = {
 const VendorsSignup = new Schema(
   {
     businessName: { type: String, min: 6, maxlength: 50, required: true },
-    location: { type: String, required: true },
     email: { type: String, required: true, maxlength: 30, unique: true },
-    password: { type: String, min: 8, maxlength: 300, required: true },
-    number: { type: Number, required: true, min: 9 },
+    officeAddress: { type: String, required: true },
+    businessNumber: { type: Number, required: true, min: 9 },
     taxId: { type: String, required: true },
     subscriptionPlan: subscriptionPlan,
     businessType: businessType,
