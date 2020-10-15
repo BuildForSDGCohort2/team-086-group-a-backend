@@ -33,6 +33,7 @@ module.exports.postUserLogin = async (req, res, next) => {
   //chcking if the header holds the token and jsoning the token to the user
   res
     .cookie(USER_TOKEN_KEY, token, {
+      expires: new Date(Number(new Date()) + 86400000), // expires after 24hrs
       httpOnly: true,
       secure: process.env.NODE_ENV === "production" ? true : false,
     })

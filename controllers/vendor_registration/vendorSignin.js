@@ -51,10 +51,12 @@ module.exports.vendorSignin = async (req, res) => {
 
   res
     .cookie(VENDOR_TOKEN_KEY, token, {
+      expires: new Date(Number(new Date()) + 86400000), // expires after 24hrs
       secure: process.env.NODE_ENV === "production" ? true : false,
       httpOnly: true,
     })
     .json({
-      token: token,
+      message: "log in successful",
+      status: "success",
     });
 };
