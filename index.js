@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const postUsersRouter = require("./routes/UserRegisteration/User");
 const loginUsersRouter = require("./routes/UserRegisteration/userLogin");
 const postMenuRouter = require("./routes/vendorMenu/postMenu");
@@ -14,10 +13,11 @@ const getCategoryRouter = require("./routes/vendorCategory/getCategory");
 const updateCategoryRouter = require("./routes/vendorCategory/updateCategory");
 const deleteCategoryRouter = require("./routes/vendorCategory/deleteCategory");
 const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
-const cors = require("cors");
 const postTestimonyRouter = require("./routes/testimony/postTestimony");
 const reportChannelRouter = require("./routes/contact_channel/ReportChannel");
 const verifyPaymentRouter = require("./routes/vendorsRegistration/paystackVerification");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const options = {
@@ -34,6 +34,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/api/v1/", postUsersRouter);
 app.use("/api/v1/", loginUsersRouter);
 app.use("/api/v1/", vendorSignUpRouter);

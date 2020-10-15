@@ -17,6 +17,8 @@ const vendorSignUp = async (req, res, next) => {
     businessType,
     taxId,
     subscriptionPlan,
+    paymentReference,
+    customerId,
   } = req.body;
 
   //checking for error
@@ -24,9 +26,10 @@ const vendorSignUp = async (req, res, next) => {
 
   if (error) {
     //send a message if error
-    return res
-      .status(400)
-      .json({ message: error.details[0].message.split('"').join("") });
+    return res.status(400).json({
+      message: error.details[0].message.split('"').join(""),
+      status: "error",
+    });
   }
 
   //check if email exist in the database
@@ -35,6 +38,7 @@ const vendorSignUp = async (req, res, next) => {
   if (emailExist) {
     return res.status(400).json({
       message: "vendor already exist",
+      status: "error",
     });
   }
 
@@ -49,7 +53,7 @@ const vendorSignUp = async (req, res, next) => {
     }
 
     //hashing the password
-    bcrypt.hash(taxId, salt, async (err, hash) => {
+    bcrypt.hash(paymentReference, salt, async (err, hash) => {
       if (err) {
         return res.status(403).json({
           message: "vendor validation failed",
@@ -63,9 +67,13 @@ const vendorSignUp = async (req, res, next) => {
         businessType,
         subscriptionPlan,
         officeAddress,
-        taxId: hash,
+        taxId,
         email,
         businessNumber,
+        paymentData: {
+          paymentReference: hash,
+          customerId,
+        },
       });
 
       try {

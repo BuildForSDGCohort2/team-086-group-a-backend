@@ -15,9 +15,7 @@ const businessType = {
 };
 
 const paymentType = {
-  mobileTransfer: { type: String },
-  card: { type: String },
-  account: { type: String },
+  type: String,
   enum: ["mobile transfer", "card", "account"],
   default: "card",
 };
@@ -34,6 +32,11 @@ const subscriptionPlan = {
   default: "monthly",
 };
 
+const paymentData = new Schema({
+  paymentReference: { type: String, required: true },
+  customerId: { type: Number, require: true },
+});
+
 const VendorsSignup = new Schema(
   {
     businessName: { type: String, min: 6, maxlength: 50, required: true },
@@ -43,6 +46,8 @@ const VendorsSignup = new Schema(
     taxId: { type: String, required: true },
     subscriptionPlan: subscriptionPlan,
     businessType: businessType,
+    paymentData: paymentData,
+    paymentType: paymentType,
   },
   { timestamps: true }
 );

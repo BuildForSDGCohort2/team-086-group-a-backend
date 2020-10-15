@@ -8,7 +8,7 @@ const {
 } = require("../../models/vendor_registration/vendor_signup");
 
 module.exports.vendorSignin = async (req, res) => {
-  const { vendorId, password } = req.body;
+  const { vendorId, paymentReference } = req.body;
 
   const { VENDOR_TOKEN_SECRETE, VENDOR_TOKEN_KEY } = process.env;
 
@@ -31,12 +31,15 @@ module.exports.vendorSignin = async (req, res) => {
   }
 
   //checking if password exist in the data base;
-  const verifyPassword = await bcrypt.compare(password, vendor.password);
+  const verifyPaymentReference = await bcrypt.compare(
+    paymentReference,
+    vendor.paymentData.paymentReference
+  );
 
   //verify using hash password
-  if (!verifyPassword) {
+  if (!verifyPaymentReference) {
     return res.status(400).json({
-      message: "password incorrect",
+      message: "access denied: criteria failed, put in the correct criteria",
       status: "error",
     });
   }
@@ -46,11 +49,12 @@ module.exports.vendorSignin = async (req, res) => {
     expiresIn: "24h", // expires in 24 hours
   });
 
-  //chcking if the header holds the token and sendind the token to the vendor
-  res.header(VENDOR_TOKEN_KEY, token).json({
-    message: "login successful",
-    status: "success",
-    vendorId: vendor._id,
-    token,
-  });
+  res
+    .cookie(VENDOR_TOKEN_KEY, token, {
+      secure: process.env.NODE_ENV === "production" ? true : false,
+      httpOnly: true,
+    })
+    .json({
+      token: token,
+    });
 };

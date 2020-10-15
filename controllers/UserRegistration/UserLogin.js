@@ -15,9 +15,9 @@ module.exports.postUserLogin = async (req, res, next) => {
     return res.status(400).json({ message: "email or password incorrect" });
   }
 
-  const isValide = await bcrypt.compare(password, user.password);
+  const isValid = await bcrypt.compare(password, user.password);
 
-  if (!isValide) {
+  if (!isValid) {
     //verify using hash password
     return res.status(400).json({
       message: "email or password incorrect",
@@ -31,10 +31,14 @@ module.exports.postUserLogin = async (req, res, next) => {
   });
 
   //chcking if the header holds the token and jsoning the token to the user
-  res.header(USER_TOKEN_KEY, token).json({
-    message: "login successful",
-    status: "success",
-    userId: user._id,
-    token,
-  });
+  res
+    .cookie(USER_TOKEN_KEY, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false,
+    })
+    .json({
+      message: "login successful",
+      status: "success",
+      userId: user._id,
+    });
 };

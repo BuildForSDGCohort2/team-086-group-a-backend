@@ -3,8 +3,13 @@ const Schema = mongoose.Schema;
 
 const vendorLogin = new Schema(
   {
-    vendorId: { type: Schema.Types.ObjectId, maxlength: 100, required: true },
-    password: { type: String, required: true, maxlength: 200, minlength: 8 },
+    vendorId: { type: String, maxlength: 100, required: true },
+    paymentReference: {
+      type: String,
+      required: true,
+      maxlength: 200,
+      minlength: 8,
+    },
   },
   { timestamps: true }
 );
