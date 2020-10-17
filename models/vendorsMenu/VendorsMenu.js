@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { string } = require("joi");
 
 const Schema = mongoose.Schema;
 
@@ -17,6 +18,7 @@ const VendorMenu = new Schema(
       default: false,
       required: true,
     },
+    vendorId: { type: String, required: true },
     offers: {
       type: Boolean,
       default: false,

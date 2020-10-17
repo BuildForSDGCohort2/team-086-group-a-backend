@@ -6,7 +6,7 @@ const {
 const getCategoryRouter = require("express").Router();
 
 getCategoryRouter.get(
-  "/dashboard/vendor/category/list/:vendor_id/:business_name",
+  "/dashboard/vendor/category/list/:vendor_id/",
   vendorVerifyToken,
   getCategory
 );

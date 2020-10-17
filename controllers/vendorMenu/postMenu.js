@@ -5,6 +5,7 @@ const {
   VendorsSchema,
 } = require("../../models/vendor_registration/vendor_signup");
 const VendorMenuList = require("../../models/vendorsMenu/VendorsMenu");
+const { userNotification } = require("../Notification/userNotification");
 
 module.exports.postMenus = async (req, res) => {
   const {
@@ -54,6 +55,12 @@ module.exports.postMenus = async (req, res) => {
     offers,
     brandName: business_name,
   });
+
+  if (NewMenu.readyMeal === true) {
+    userNotification(NewMenu);
+  } else if (NewMenu.offers === true) {
+    userNotification(NewMenu);
+  }
 
   try {
     NewMenu.save();

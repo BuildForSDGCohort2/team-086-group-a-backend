@@ -20,19 +20,6 @@ module.exports.PostCategories = async (req, res) => {
       .json({ message: error.details[0].message.split('"').join("") });
   }
 
-  //verifying if the client is a vendor
-  const verifyCriteria = await VendorsSchema.findOne({
-    _id: vendor_id,
-  });
-
-  //sending an error response
-  if (!verifyCriteria) {
-    return res.status(400).json({
-      status: "error",
-      message: "access denied",
-    });
-  }
-
   //verifying if the vendor has already added a category
   const vendorHasSetCategory = await VendorCategories.findOne({
     vendorId: vendor_id,
@@ -58,7 +45,6 @@ module.exports.PostCategories = async (req, res) => {
     NewCategories.save();
     return res.status(201).json({
       message: "menu added successfully",
-      data: NewCategories,
       status: "success",
     });
   } catch (error) {

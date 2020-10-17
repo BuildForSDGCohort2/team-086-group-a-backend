@@ -21,6 +21,7 @@ const SignUpUsers = new Schema(
     phoneNumber: { type: Number, maxlength: 30, min: 9, required: true },
     password: { type: String, required: true, maxlength: 200, minlength: 8 },
     userOrder: { UserOrders },
+    notification: { type: Array },
     subcription: UserSubscription,
   },
   { timestamps: true }

@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const postUsersRouter = require("./routes/UserRegisteration/User");
 const loginUsersRouter = require("./routes/UserRegisteration/userLogin");
 const postMenuRouter = require("./routes/vendorMenu/postMenu");
@@ -16,8 +18,14 @@ const vendorSignInRouter = require("./routes/vendorsRegistration/vendorSignin");
 const postTestimonyRouter = require("./routes/testimony/postTestimony");
 const reportChannelRouter = require("./routes/contact_channel/ReportChannel");
 const verifyPaymentRouter = require("./routes/vendorsRegistration/paystackVerification");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+const getAllBrandNamesRouter = require("./routes/userRequests/getAllBrandNames");
+const postNotificationRouter = require("./routes/notification/postNotification");
+const loggedInUserRouter = require("./routes/userRequests/getLoggedinUser");
+const getAllMenuForUserRouter = require("./routes/userRequests/getAllMenus");
+const getAllCategoryForUserRouter = require("./routes/userRequests/getAllCategory");
+const getOneCategoryForUserRouter = require("./routes/userRequests/getoneCategory");
+const getOneMenuForUserRouter = require("./routes/userRequests/getOneMenu");
+
 require("dotenv").config();
 
 const options = {
@@ -31,7 +39,12 @@ const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI;
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [`${process.env.FRONT_URL}`, "http://localhost:3000"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -51,6 +64,13 @@ app.use("/api/v1/", updateCategoryRouter);
 app.use("/api/v1/", deleteCategoryRouter);
 app.use("/api/v1/", postTestimonyRouter);
 app.use("/api/v1/", reportChannelRouter);
+app.use("/api/v1/", getAllBrandNamesRouter);
+app.use("/api/v1/", postNotificationRouter);
+app.use("/api/v1/", loggedInUserRouter);
+app.use("/api/v1/", getAllMenuForUserRouter);
+app.use("/api/v1/", getAllCategoryForUserRouter);
+app.use("/api/v1/", getOneCategoryForUserRouter);
+app.use("/api/v1/", getOneMenuForUserRouter);
 
 mongoose
   .connect(MONGODB_URI, options)
