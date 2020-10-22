@@ -83,5 +83,5 @@ mongoose
 
 //start the server
 app.listen(PORT, () => {
-  console.warn(`server ready on ${PORT}`);
+  console.log(`server ready on ${PORT}`);
 });

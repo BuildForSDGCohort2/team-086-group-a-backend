@@ -55,7 +55,7 @@ const vendorSignUp = async (req, res, next) => {
     //hashing the password
     bcrypt.hash(paymentReference, salt, async (err, hash) => {
       if (err) {
-        return res.status(403).json({
+        return res.status(500).json({
           message: "vendor validation failed",
           status: "error",
         });
@@ -80,7 +80,7 @@ const vendorSignUp = async (req, res, next) => {
         //saving the new member to mongodb
         await Vendor.save();
         res.status(200).json({
-          massage: "vendor added successfully",
+          message: "vendor added successfully",
           vendorId: Vendor._id,
           status: "success",
         });

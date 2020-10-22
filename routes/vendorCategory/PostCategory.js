@@ -6,7 +6,7 @@ const { vendorVerifyToken } = require("../../middlewares/VendorsVerifyToken");
 const vendorCategoryRouter = require("express").Router();
 
 vendorCategoryRouter.post(
-  "/dashboard/vendor/category/:vendor_id",
+  "/dashboard/vendor/category/",
   vendorVerifyToken,
   PostCategories
 );

@@ -6,9 +6,10 @@ const {
   VendorsSchema,
 } = require("../../models/vendor_registration/vendor_signup");
 
-module.exports.PostCategories = async (req, res) => {
+module.exports.PostCategories = async (req, res, next) => {
   const { category, brandName } = req.body;
   const { vendor_id } = req.params;
+  console.log("req.vendor", req.vendor);
 
   //checking for error
   const { error } = categoryValidation.validate(req.body);
@@ -22,7 +23,7 @@ module.exports.PostCategories = async (req, res) => {
 
   //verifying if the vendor has already added a category
   const vendorHasSetCategory = await VendorCategories.findOne({
-    vendorId: vendor_id,
+    vendorId: req.vendor._id,
   });
 
   //sending a message to the vendor if the vendor id exist in the category list
