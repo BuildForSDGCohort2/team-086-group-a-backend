@@ -19,7 +19,7 @@ module.exports.postMenus = async (req, res) => {
     image,
   } = req.body;
 
-  const { vendor_id, business_name } = req.params;
+  const { business_name } = req.params;
 
   const { error } = vendorsMenuValidator.validate(req.body);
   if (error) {
@@ -31,8 +31,7 @@ module.exports.postMenus = async (req, res) => {
 
   //checking if the person is a vendor
   const verifyVendorId = await VendorsSchema.find({
-    _id: vendor_id,
-    brandName: business_name,
+    _id: req.vendor._id,
   });
 
   //verifying the if
@@ -49,7 +48,7 @@ module.exports.postMenus = async (req, res) => {
     image,
     desc,
     price,
-    vendorId: vendor_id,
+    vendorId: req.vendor._id,
     discount,
     readyMeal,
     offers,

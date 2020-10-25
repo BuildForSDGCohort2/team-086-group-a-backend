@@ -6,7 +6,7 @@ const {
 const loggedInUserRouter = require("express").Router();
 
 loggedInUserRouter.get(
-  "/dashboard/loggin_user/:userId",
+  "/dashboard/loggin_user/",
   userVerifyToken,
   getLoggedinUserObject
 );

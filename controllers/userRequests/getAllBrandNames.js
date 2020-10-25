@@ -1,8 +1,11 @@
 const VendorCategories = require("../../models/vendorCategory/postCategory");
 
 module.exports.getAllCategory = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
   // get all categories
-  const allCategory = await VendorCategories.find();
+  const allCategory = await VendorCategories.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
 
   //check for error
   if (!allCategory) {

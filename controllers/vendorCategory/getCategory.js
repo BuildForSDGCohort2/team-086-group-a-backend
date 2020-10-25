@@ -5,10 +5,8 @@ const {
 const VendorCategories = require("../../models/vendorCategory/postCategory");
 
 module.exports.getCategory = async (req, res) => {
-  const { vendor_id } = req.params;
-
   const haveCategory = await VendorCategories.findOne({
-    vendorId: vendor_id,
+    vendorId: req.vendor._id,
   });
 
   if (!haveCategory) {

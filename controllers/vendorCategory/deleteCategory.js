@@ -4,11 +4,10 @@ const {
 const VendorCategories = require("../../models/vendorCategory/postCategory");
 
 module.exports = async (req, res) => {
-  const { vendor_id, business_name, category_id } = req.params;
+  const { category_id } = req.params;
 
   const verifyVendor = await VendorCategories.find({
-    vendorId: vendor_id,
-    brandName: business_name,
+    vendorId: req.vendor._id,
   });
 
   if (!verifyVendor) {
@@ -17,6 +16,7 @@ module.exports = async (req, res) => {
       status: "error",
     });
   }
+
   const findCategoryAndDelete = await VendorCategories.findByIdAndDelete(
     category_id,
     (error, removed) => {
@@ -31,6 +31,7 @@ module.exports = async (req, res) => {
           status: "error",
         });
       }
+
       return res.status(200).json({
         message: "successfully deleted your category",
         status: "success",

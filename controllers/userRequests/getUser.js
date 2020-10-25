@@ -1,11 +1,8 @@
 const SignupUser = require("../../models/UserRegistration/UserSignUp");
 
 module.exports.getLoggedinUserObject = async (req, res) => {
-  //get user id
-  const { userId } = req.params;
-
   //check if user exist
-  const findLoggedInUser = await SignupUser.findById({ _id: userId });
+  const findLoggedInUser = await SignupUser.findById({ _id: req.user._id });
 
   //check for error
   if (!findLoggedInUser) {

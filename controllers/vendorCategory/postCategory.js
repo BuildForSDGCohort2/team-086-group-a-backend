@@ -7,9 +7,8 @@ const {
 } = require("../../models/vendor_registration/vendor_signup");
 
 module.exports.PostCategories = async (req, res, next) => {
-  const { category, brandName } = req.body;
-  const { vendor_id } = req.params;
-  console.log("req.vendor", req.vendor);
+  const { category } = req.body;
+  const { brandName } = req.params;
 
   //checking for error
   const { error } = categoryValidation.validate(req.body);
@@ -19,6 +18,19 @@ module.exports.PostCategories = async (req, res, next) => {
     return res
       .status(400)
       .json({ message: error.details[0].message.split('"').join("") });
+  }
+
+  //checking form brand name
+  const verifyBusinessName = await VendorsSchema.findOne({
+    businessName: brandName,
+  });
+
+  //sending an error message if the brand name does not exist
+  if (!verifyBusinessName) {
+    return res.status(400).json({
+      message: "brandName does not match the existing business name",
+      error: "error",
+    });
   }
 
   //verifying if the vendor has already added a category
@@ -39,13 +51,13 @@ module.exports.PostCategories = async (req, res, next) => {
   const NewCategories = new VendorCategories({
     category,
     brandName,
-    vendorId: vendor_id,
+    vendorId: req.vendor._id,
   });
 
   try {
     NewCategories.save();
     return res.status(201).json({
-      message: "menu added successfully",
+      message: "category added successfully",
       status: "success",
     });
   } catch (error) {

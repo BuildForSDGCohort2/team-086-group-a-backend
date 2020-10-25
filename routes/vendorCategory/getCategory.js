@@ -1,12 +1,9 @@
 const { getCategory } = require("../../controllers/vendorCategory/getCategory");
-const {
-  ver,
-  vendorVerifyToken,
-} = require("../../middlewares/VendorsVerifyToken");
+const { vendorVerifyToken } = require("../../middlewares/VendorsVerifyToken");
 const getCategoryRouter = require("express").Router();
 
 getCategoryRouter.get(
-  "/dashboard/vendor/category/list/:vendor_id/",
+  "/dashboard/vendor/category/list",
   vendorVerifyToken,
   getCategory
 );

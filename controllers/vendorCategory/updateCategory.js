@@ -1,12 +1,11 @@
 const VendorCategories = require("../../models/vendorCategory/postCategory");
 
 module.exports.putCategory = async (req, res) => {
-  const { vendor_id, business_name, category_id } = req.params;
+  const { id } = req.params;
 
   //checking for category that holds the vendor id and business name in it object
   const checkVendorId = await VendorCategories.find({
-    vendorId: vendor_id,
-    brandName: business_name,
+    vendorId: req.vendor._id,
   });
 
   //checking for errors
@@ -19,7 +18,7 @@ module.exports.putCategory = async (req, res) => {
 
   //updating the category
   const findCategoryByID = await VendorCategories.findByIdAndUpdate(
-    category_id,
+    id,
     req.body,
     (error, updated) => {
       if (error) {
@@ -30,7 +29,6 @@ module.exports.putCategory = async (req, res) => {
       } else {
         return res.status(200).json({
           message: "category have been successfully updated",
-          data: updated,
           status: "error",
         });
       }
