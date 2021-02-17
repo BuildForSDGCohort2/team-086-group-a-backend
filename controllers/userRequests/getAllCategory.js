@@ -1,4 +1,3 @@
-const SignupUser = require("../../models/UserRegistration/UserSignUp");
 const VendorCategories = require("../../models/vendorCategory/postCategory");
 
 module.exports.getAllCategoryForUser = async (req, res) => {

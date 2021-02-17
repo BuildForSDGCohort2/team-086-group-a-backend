@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-module.exports.userVerifyToken = (req, res, next) => {
+module.exports.userVerifyToken = async (req, res, next) => {
   //get the token secret from the .env file
   const { USER_TOKEN_SECRETE, USER_TOKEN_KEY } = process.env;
-  const token = req.cookies.user_register_token || "";
+  const token = (await req.cookies[USER_TOKEN_KEY]) || "";
 
   if (!token) {
     return res.status(401).send({

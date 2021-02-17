@@ -5,21 +5,15 @@ const {
   VendorsSchema,
 } = require("../../models/vendor_registration/vendor_signup");
 const VendorMenuList = require("../../models/vendorsMenu/VendorsMenu");
+
 const { userNotification } = require("../Notification/userNotification");
 
-module.exports.postMenus = async (req, res) => {
-  const {
-    name,
-    type,
-    desc,
-    price,
-    discount,
-    readyMeal,
-    offers,
-    image,
-  } = req.body;
+require("dotenv").config();
 
-  const { business_name } = req.params;
+module.exports.postMenus = async (req, res) => {
+  const { name, type, desc, price, discount, readyMeal, offers } = req.body;
+
+  const { brandName } = req.params;
 
   const { error } = vendorsMenuValidator.validate(req.body);
   if (error) {
@@ -30,29 +24,40 @@ module.exports.postMenus = async (req, res) => {
   }
 
   //checking if the person is a vendor
-  const verifyVendorId = await VendorsSchema.find({
+  const verifyVendorId = await VendorsSchema.findOne({
     _id: req.vendor._id,
   });
 
   //verifying the if
   if (!verifyVendorId) {
-    return res.status(400).json({
+    return res.status(401).json({
       status: "error",
       message: "access denied",
+    });
+  }
+
+  const isVerifiedBrandName = await VendorsSchema.findOne({
+    businessName: brandName,
+  });
+
+  if (!isVerifiedBrandName) {
+    return res.status(400).json({
+      message: "sorry no match was found for brand name",
+      status: "error",
     });
   }
 
   const NewMenu = new VendorMenuList({
     name,
     type,
-    image,
+    image: req.file.path,
     desc,
     price,
     vendorId: req.vendor._id,
     discount,
     readyMeal,
     offers,
-    brandName: business_name,
+    brandName: brandName,
   });
 
   if (NewMenu.readyMeal === true) {
@@ -62,13 +67,13 @@ module.exports.postMenus = async (req, res) => {
   }
 
   try {
-    NewMenu.save();
+    await NewMenu.save();
     return res.status(201).json({
       message: "menu added successfully",
       status: "success",
     });
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       message: `user is unathorized error`,
       status: "error",
     });

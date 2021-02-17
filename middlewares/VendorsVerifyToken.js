@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
-
+const dotenv = require("dotenv");
+dotenv.config();
 module.exports.vendorVerifyToken = async (req, res, next) => {
   //get the token secret from the .env file
-  const { VENDOR_TOKEN_SECRETE } = process.env;
+  const { VENDOR_TOKEN_SECRETE, VENDOR_TOKEN_KEY } = process.env;
   // const token = req.header(VENDOR_TOKEN_KEY);
-  const token = req.cookies.vendor_register_token || "";
+  const token = req.cookies[VENDOR_TOKEN_KEY] || "";
 
   if (!token) {
     return res.status(401).send({
@@ -14,9 +15,10 @@ module.exports.vendorVerifyToken = async (req, res, next) => {
   }
 
   try {
-    const verified = await jwt.verify(token, VENDOR_TOKEN_SECRETE);
+    const verified = jwt.verify(token, VENDOR_TOKEN_SECRETE);
     //getting the userId and the token duration;
     req.vendor = verified;
+
     next();
   } catch (error) {
     res.status(401).json({

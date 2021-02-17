@@ -6,11 +6,11 @@ const {
 
 module.exports.updateMenu = async (req, res) => {
   //getting the sent id
-  const { item_id, vendorId } = req.params;
+  const { item_id } = req.params;
 
   //checking for a menu with the id and the item id
   const menuByVendor = await VendorMenuList.find({
-    vendorId: vendorId,
+    vendorId: vendor._id,
     _id: item_id,
   });
 

@@ -25,9 +25,11 @@ const getAllMenuForUserRouter = require("./routes/userRequests/getAllMenus");
 const getAllCategoryForUserRouter = require("./routes/userRequests/getAllCategory");
 const getOneCategoryForUserRouter = require("./routes/userRequests/getoneCategory");
 const getOneMenuForUserRouter = require("./routes/userRequests/getOneMenu");
+const getMenuByTypeRouter = require("./routes/vendorMenu/getMenuByType");
 
 require("dotenv").config();
 
+//setting the mongoose options
 const options = {
   useNewUrlParser: true,
   useFindAndModify: false,
@@ -35,16 +37,25 @@ const options = {
   useUnifiedTopology: true,
 };
 
+//setting the port to use
 const PORT = process.env.PORT || 4000;
+
+//getting the mongodb uri from the env file
 const MONGODB_URI = process.env.MONGODB_URI;
+
 const app = express();
 
 app.use(
   cors({
-    origin: [`${process.env.FRONT_URL}`, "http://localhost:3000"],
+    origin: [
+      `${process.env.FRONT_URL}`,
+      "http://192.168.43.35:3000",
+      // "http://localhost:3000",
+    ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -71,7 +82,9 @@ app.use("/api/v1/", getAllMenuForUserRouter);
 app.use("/api/v1/", getAllCategoryForUserRouter);
 app.use("/api/v1/", getOneCategoryForUserRouter);
 app.use("/api/v1/", getOneMenuForUserRouter);
+app.use("/api/v1/", getMenuByTypeRouter);
 
+//connecting to the database
 mongoose
   .connect(MONGODB_URI, options)
   .then(() => {

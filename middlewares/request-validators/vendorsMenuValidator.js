@@ -2,7 +2,6 @@ const Joi = require("joi");
 
 const vendorsMenuValidator = Joi.object({
   name: Joi.string().required(),
-  image: Joi.string().required(),
   type: Joi.string().min(3).max(30).trim().required(),
   desc: Joi.string().min(15).max(300).trim().required(),
   price: Joi.number().min(2).required(),
