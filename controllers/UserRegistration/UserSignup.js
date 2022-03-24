@@ -5,7 +5,6 @@ const SendEmail = require("../../Util/SendEmail");
 exports.postUserSignUp = async (req, res) => {
   //destruct the req body
   const { fullName, email, password, phoneNumber } = req.body;
-
   //checking if email exist
   const emailExist = await UserSignUp.findOne({ email: email });
   if (emailExist) {
@@ -51,7 +50,8 @@ exports.postUserSignUp = async (req, res) => {
 
             // send.send(email, password, fullName);
           } catch (error) {
-            res.status(400).json({
+            console.log("error", error);
+            return res.status(400).json({
               message: error,
               status: "error",
             });
